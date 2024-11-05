@@ -21,7 +21,8 @@ def translate_text(text: str) -> str:
     mock_translations = {
         "Bonjour": "Hello",
         "Hola": "Hello",
-        "Hallo": "Hello"
+        "Hallo": "Hello", 
+        "perro": "Dog"
     }
     return mock_translations.get(text, f"Translated {text}")
 
