@@ -6,6 +6,14 @@
 
 ## Redis
 
+install dependencies
+
+```bash
+pip install -r requirements.txt
+
+```
+
+
 run redis
 ```bash
 sudo service redis-server start
