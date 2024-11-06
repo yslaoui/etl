@@ -1,4 +1,3 @@
-# app/translation_utils.py
 from langdetect import detect, LangDetectException
 from app.cache import cache  # Assuming a cache setup using Redis
 import json
@@ -7,13 +6,13 @@ import re
 import requests
 
 
-# Load the mock translations JSON file at the start of the app
+# Load the mock translations JSON file
 def load_mock_translations():
     file_path = os.path.join(os.path.dirname(__file__), "mock_translations.json")
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
     
-# Store mock translations in a global variable for easy access
+# Store mock translations 
 mock_translations = load_mock_translations()
 
 

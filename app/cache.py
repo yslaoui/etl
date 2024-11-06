@@ -10,12 +10,12 @@ def get(text: str):
    """Get a cached translation if available."""
    cached_data = cache.get(text)
    if cached_data:
-       return eval(cached_data.decode("utf-8"))  # Decode and convert from bytes to dictionary
+       return eval(cached_data.decode("utf-8"))  
    return None
 
 
 def set(text: str, data: dict):
    """Cache the translation for future use."""
-   cache.set(text, str(data))  # Convert dict to string for storage
+   cache.set(text, str(data))  
 
 

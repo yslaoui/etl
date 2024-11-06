@@ -1,4 +1,3 @@
-# app/main.py
 from fastapi import FastAPI, Depends, HTTPException
 from app.schemas import TranslationRequest, TranslationResponse
 from app.translation_utils import detect_language, translate_text  # Assume these utilities exist
@@ -34,10 +33,8 @@ async def read_root():
 
 @app.post("/translate", response_model=TranslationResponse)
 async def translate(request: TranslationRequest, db: AsyncSession = Depends(get_db)):
-   # Log the incoming request text
    logger.info(f"Received translation request: {request.text}")
 
-   # Check cache first
    cached_translation = get_from_cache(request.text)
    if cached_translation:
        logger.info(f"Cache hit for text: {request.text}")
@@ -54,11 +51,11 @@ async def translate(request: TranslationRequest, db: AsyncSession = Depends(get_
    language = detect_language(request.text)
    logger.info(f"Detected language for '{request.text}' as '{language}'")
 
-   if language == "en":  # Assuming English text doesn't need translation
+   if language == "en":  
        logger.info(f"No translation needed for text: '{request.text}' (language: English)")
        translation = request.text
    else:
-       # Translate the text (mocked)
+       
        translation = translate_text(request.text)
        logger.info(f"Translated text: '{request.text}' to '{translation}'")
 
@@ -77,7 +74,6 @@ async def translate(request: TranslationRequest, db: AsyncSession = Depends(get_
 
 
 
-   # Return the translation response
    return TranslationResponse(
        text=request.text,
        language=language,
