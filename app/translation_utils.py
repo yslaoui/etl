@@ -2,29 +2,32 @@
 from langdetect import detect, LangDetectException
 from app.cache import cache  # Assuming a cache setup using Redis
 import json
+import os
 import re
+import requests
 
- 
-def detect_language(text: str) -> str:
-    """Detects the language of the given text with additional validation."""
-    # Basic checks for nonsensical or repetitive inputs
-    if len(text) < 3 or re.fullmatch(r'(.)\1*', text):  # Checks for very short or repetitive input like "aaa"
-        return "unknown"
+
+# Load the mock translations JSON file at the start of the app
+def load_mock_translations():
+    file_path = os.path.join(os.path.dirname(__file__), "mock_translations.json")
+    with open(file_path, "r", encoding="utf-8") as f:
+        return json.load(f)
     
+# Store mock translations in a global variable for easy access
+mock_translations = load_mock_translations()
+
+
+def detect_language(text: str) -> str:
+    """Detects the language of the given text, or returns 'unknown' if detection fails."""
     try:
         return detect(text)
     except LangDetectException:
         return "unknown"
 
 def translate_text(text: str) -> str:
-    """Mocks translation by returning a pre-defined translation."""
-    mock_translations = {
-        "Bonjour": "Hello",
-        "Hola": "Hello",
-        "Hallo": "Hello", 
-        "perro": "Dog"
-    }
+    """Translate text using mock translations loaded from a JSON file."""
     return mock_translations.get(text, f"Translated {text}")
+
 
 def get_from_cache(text: str):
     """Retrieves cached translation and converts it from JSON."""
